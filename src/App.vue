@@ -2,6 +2,7 @@
 import axios from "axios";
 import AppHeader from "./components/AppHeader.vue";
 import AppMain from "./components/AppMain.vue";
+import { store } from "./store";
 export default {
   components: {
     AppHeader,
@@ -9,16 +10,24 @@ export default {
   },
   data() {
     return {
-      projects: [],
-      baseUrl: "http://127.0.0.1:8000/",
-      uriProjects: "api/projects",
+      store,
     };
   },
   methods: {
     getProjects() {
-      axios.get(this.baseUrl + this.uriProjects).then((response) => {
-        this.projects = response.data.data;
-      });
+      // axios.get(this.baseUrl + this.uriProjects).then((response) => {
+      //   this.projects = response.data.data;
+      // });
+      axios
+        .get(this.store.baseUrl + this.store.uriProjects, {
+          params: {
+            page: this.store.currentPage,
+          },
+        })
+        .then((response) => {
+          this.store.projects = response.data.data.data;
+          this.store.lastPage = response.data.data.last_page;
+        });
     },
   },
   created() {
@@ -30,6 +39,6 @@ export default {
 <template>
   <div class="d-flex flex-column overflow-hidden vh-100">
     <AppHeader />
-    <AppMain :projects="projects" />
+    <AppMain :projects="store.projects" />
   </div>
 </template>
