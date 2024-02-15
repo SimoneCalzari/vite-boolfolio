@@ -17,7 +17,6 @@ export default {
   methods: {
     getProjects() {
       axios.get(this.baseUrl + this.uriProjects).then((response) => {
-        console.log(response.data);
         this.projects = response.data.data;
       });
     },
@@ -29,6 +28,8 @@ export default {
 </script>
 
 <template>
-  <AppHeader />
-  <AppMain :projects="projects" />
+  <div class="d-flex flex-column overflow-hidden vh-100">
+    <AppHeader />
+    <AppMain :projects="projects" />
+  </div>
 </template>

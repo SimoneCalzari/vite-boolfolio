@@ -1,20 +1,22 @@
 <script>
+import MainCard from "./MainCard.vue";
 export default {
-  props:
-    // {
-    //   projects: Array,
-    // },
-    ["projects"],
+  components: {
+    MainCard,
+  },
+  props: ["projects"],
 };
 </script>
 
 <template>
-  <main>
+  <main class="flex-grow-1 overflow-auto pb-4">
     <div class="container">
       <h2 class="text-center py-4">My Projects</h2>
-      <ul>
-        <li v-for="project in projects">{{ project.title }}</li>
-      </ul>
+      <div class="row g-3">
+        <div class="col col-md-4 d-flex" v-for="project in projects">
+          <MainCard :project="project" />
+        </div>
+      </div>
     </div>
   </main>
 </template>
