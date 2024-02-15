@@ -13,7 +13,7 @@ export default {
     <div class="container">
       <h2 class="text-center py-4">My Projects</h2>
       <div class="row g-3">
-        <div class="col col-md-4 d-flex" v-for="project in projects">
+        <div class="col-4 d-flex" v-for="project in projects">
           <MainCard :project="project" />
         </div>
       </div>
