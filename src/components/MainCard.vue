@@ -1,8 +1,9 @@
 <script>
+import { store } from "../store";
 export default {
   data() {
     return {
-      imgUrl: "http://127.0.0.1:8000/storage/",
+      store,
     };
   },
   props: {
@@ -25,7 +26,7 @@ export default {
       <!-- IMMAGINE PROGETTO O SEGNAPOSTO IN ALTERNATIVA -->
       <img
         class="card-img-top"
-        :src="imgUrl + project.project_img"
+        :src="store.imgUrl + project.project_img"
         :alt="project.slug"
         v-if="project.project_img"
       />
@@ -48,13 +49,7 @@ export default {
         {{ description }}
       </p>
       <!-- /DESCRIZIONE -->
-
-      <!-- <h5 class="card-title">Application Type</h5>
-      <p class="card-text" v-if="project.is_frontend">FrontEnd</p>
-      <p class="card-text" v-else-if="project.is_backend">BackEnd</p>
-      <p class="card-text" v-else>FullStack</p> -->
-
-      <!-- DIFFOCOLTA -->
+      <!-- DIFFICOLTA -->
       <h5 class="card-title">Difficulty</h5>
       <p class="card-text">
         {{ project.type.difficulty }}

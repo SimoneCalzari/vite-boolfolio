@@ -11,32 +11,34 @@ export default {
   components: {
     MainCard,
   },
-  props: ["projects"],
   methods: {
     getProjects() {
       axios
-        .get(this.store.baseUrl + this.store.uriProjects, {
+        .get(`${store.baseUrl}${store.uriProjects}`, {
           params: {
-            page: this.store.currentPage,
+            page: store.currentPage,
           },
         })
         .then((response) => {
-          this.store.projects = response.data.data.data;
-          this.store.lastPage = response.data.data.last_page;
+          store.projects = response.data.data.data;
+          store.lastPage = response.data.data.last_page;
         });
     },
     nextPage() {
-      if (this.store.currentPage < this.store.lastPage) {
-        this.store.currentPage++;
+      if (store.currentPage < store.lastPage) {
+        store.currentPage++;
         this.getProjects();
       }
     },
     previousPage() {
-      if (this.store.currentPage > 1) {
-        this.store.currentPage--;
+      if (store.currentPage > 1) {
+        store.currentPage--;
         this.getProjects();
       }
     },
+  },
+  created() {
+    this.getProjects();
   },
 };
 </script>
@@ -54,7 +56,7 @@ export default {
         <button class="btn btn-primary" @click="nextPage">Next Page</button>
       </div>
       <div class="row g-3 justify-content-center">
-        <div class="col-4 d-flex" v-for="project in projects">
+        <div class="col-4 d-flex" v-for="project in store.projects">
           <MainCard :project="project" />
         </div>
       </div>
