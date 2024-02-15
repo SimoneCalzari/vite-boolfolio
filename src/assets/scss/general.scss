@@ -2,4 +2,6 @@
 @use "./partials/mixins" as *;
 @use "./partials/utilities" as *;
 @use "./partials/variables" as *;
-@use "./partials/typography" as *;
+
+// Import all of Bootstrap's CSS
+@import "bootstrap/scss/bootstrap";
