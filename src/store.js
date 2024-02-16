@@ -5,6 +5,6 @@ export const store = reactive({
   lastPage: 1,
   projects: [],
   baseUrl: "http://127.0.0.1:8000/",
-  uriProjects: "api/projects",
+  uriProjects: "api/projects/",
   imgUrl: "http://127.0.0.1:8000/storage/",
 });

@@ -3,6 +3,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import AppHome from "./pages/AppHome.vue";
 import AppProjects from "./pages/AppProjects.vue";
 import AppAboutMe from "./pages/AppAboutMe.vue";
+import NotFound from "./pages/NotFound.vue";
+import Project from "./pages/Project.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -21,6 +23,16 @@ const router = createRouter({
       path: "/about-me",
       name: "about",
       component: AppAboutMe,
+    },
+    {
+      path: "/projects/:slug",
+      name: "project",
+      component: Project,
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "NotFound",
+      component: NotFound,
     },
   ],
 });

@@ -49,21 +49,13 @@ export default {
         {{ description }}
       </p>
       <!-- /DESCRIZIONE -->
-      <!-- DIFFICOLTA -->
-      <h5 class="card-title">Difficulty</h5>
-      <p class="card-text">
-        {{ project.type.difficulty }}
-      </p>
-      <!-- /DIFFOCOLTA -->
-      <!-- TECHNOLOGIES-->
-      <h5 class="card-title">Technologies</h5>
-      <ul v-if="project.technologies.length">
-        <li v-for="technology in project.technologies">
-          {{ technology.name }}
-        </li>
-      </ul>
-      <p class="card-text" v-else>Technologies not recorded yet</p>
-      <!-- /TECHNOLOGIES-->
+      <!-- DETTAGLI -->
+      <router-link
+        class="btn btn-primary"
+        :to="{ name: 'project', params: { slug: project.slug } }"
+        >Details</router-link
+      >
+      <!-- /DETTAGLI -->
     </div>
   </div>
 </template>
