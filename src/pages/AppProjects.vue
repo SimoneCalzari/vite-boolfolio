@@ -1,18 +1,22 @@
 <script>
 import axios from "axios";
-import MainCard from "./MainCard.vue";
+import MainCard from "../components/MainCard.vue";
+import Loader from "../components/Loader.vue";
 import { store } from "../store";
 export default {
   data() {
     return {
       store,
+      loading: true,
     };
   },
   components: {
     MainCard,
+    Loader,
   },
   methods: {
     getProjects() {
+      this.loading = true;
       axios
         .get(`${store.baseUrl}${store.uriProjects}`, {
           params: {
@@ -22,6 +26,9 @@ export default {
         .then((response) => {
           store.projects = response.data.data.data;
           store.lastPage = response.data.data.last_page;
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
     nextPage() {
@@ -38,6 +45,7 @@ export default {
     },
   },
   created() {
+    store.currentPage = 1;
     this.getProjects();
   },
 };
@@ -55,7 +63,8 @@ export default {
         </h2>
         <button class="btn btn-primary" @click="nextPage">Next Page</button>
       </div>
-      <div class="row g-3 justify-content-center">
+      <Loader v-if="loading" />
+      <div class="row g-3 justify-content-center" v-else>
         <div class="col-4 d-flex" v-for="project in store.projects">
           <MainCard :project="project" />
         </div>
