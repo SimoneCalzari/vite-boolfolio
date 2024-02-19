@@ -7,7 +7,7 @@ export default {
   data() {
     return {
       store,
-      loading: true,
+      loading: false,
     };
   },
   components: {
@@ -34,18 +34,20 @@ export default {
     nextPage() {
       if (store.currentPage < store.lastPage) {
         store.currentPage++;
+        this.$router.push({ query: { page: store.currentPage } });
         this.getProjects();
       }
     },
     previousPage() {
       if (store.currentPage > 1) {
         store.currentPage--;
+        this.$router.push({ query: { page: store.currentPage } });
         this.getProjects();
       }
     },
   },
   created() {
-    store.currentPage = 1;
+    this.$router.push({ query: { page: store.currentPage } });
     this.getProjects();
   },
 };
