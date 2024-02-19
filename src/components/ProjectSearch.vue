@@ -6,6 +6,7 @@ export default {
       store,
     };
   },
+  props: ["errors"],
   emits: ["search"],
   methods: {
     searchProjects() {
@@ -33,6 +34,7 @@ export default {
       class="form-control"
       id="search-projects"
       v-model="store.searchKey"
+      :class="errors.length ? 'is-invalid' : ''"
     />
     <button class="btn btn-primary" type="button" @click="searchProjects">
       Button

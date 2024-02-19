@@ -9,6 +9,7 @@ export default {
     return {
       store,
       loading: false,
+      errors: [],
     };
   },
   components: {
@@ -26,9 +27,15 @@ export default {
             key: store.searchKey,
           },
         })
+        .catch((error) => {
+          store.projects = [];
+          this.errors = [];
+          this.errors.push(error.response.data.message);
+        })
         .then((response) => {
           store.projects = response.data.data.data;
           store.lastPage = response.data.data.last_page;
+          this.errors = [];
         })
         .finally(() => {
           this.loading = false;
@@ -75,7 +82,10 @@ export default {
         </h2>
         <button class="btn btn-primary" @click="nextPage">Next Page</button>
       </div>
-      <ProjectSearch @search="getProjects" />
+      <ProjectSearch @search="getProjects" :errors="errors" />
+      <div class="alert alert-danger" v-for="error in errors">
+        {{ error }}
+      </div>
       <Loader v-if="loading" />
       <div class="row g-3 justify-content-center" v-else>
         <div class="col-4 d-flex" v-for="project in store.projects">
