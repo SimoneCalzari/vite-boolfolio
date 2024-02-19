@@ -4,7 +4,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      project: null,
+      project: {},
       store,
     };
   },
@@ -13,7 +13,7 @@ export default {
       axios
         .get(`${store.baseUrl}${store.uriProjects}${this.$route.params.slug}`)
         .catch((error) => {
-          this.$route.push({ name: "NotFound" });
+          // this.$router.push({ name: "NotFound" });
         })
         .then((response) => {
           this.project = response.data.data;
@@ -47,7 +47,9 @@ export default {
         >{{ technology.name }}
       </span>
       <div class="mt-3">
-        <router-link class="btn btn-primary" :to="{ name: 'projects' }"
+        <router-link
+          class="btn btn-primary"
+          :to="{ name: 'projects', query: { page: store.currentPage } }"
           >Back to Projects</router-link
         >
       </div>

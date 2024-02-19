@@ -52,7 +52,11 @@ export default {
       <!-- DETTAGLI -->
       <router-link
         class="btn btn-primary"
-        :to="{ name: 'project', params: { slug: project.slug } }"
+        :to="{
+          name: 'project',
+          params: { slug: project.slug },
+          query: { page: store.currentPage },
+        }"
         >Details</router-link
       >
       <!-- /DETTAGLI -->

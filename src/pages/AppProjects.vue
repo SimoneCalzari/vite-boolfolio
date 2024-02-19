@@ -34,20 +34,26 @@ export default {
     nextPage() {
       if (store.currentPage < store.lastPage) {
         store.currentPage++;
-        this.$router.push({ query: { page: store.currentPage } });
+        this.$router.push({
+          name: "projects",
+          query: { page: store.currentPage },
+        });
         this.getProjects();
       }
     },
     previousPage() {
       if (store.currentPage > 1) {
         store.currentPage--;
-        this.$router.push({ query: { page: store.currentPage } });
+        this.$router.push({
+          name: "projects",
+          query: { page: store.currentPage },
+        });
         this.getProjects();
       }
     },
   },
   created() {
-    this.$router.push({ query: { page: store.currentPage } });
+    store.currentPage = this.$route.query.page ?? 1;
     this.getProjects();
   },
 };
