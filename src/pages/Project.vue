@@ -49,7 +49,10 @@ export default {
       <div class="mt-3">
         <router-link
           class="btn btn-primary"
-          :to="{ name: 'projects', query: { page: store.currentPage } }"
+          :to="{
+            name: 'projects',
+            query: { page: store.currentPage, key: store.searchKey },
+          }"
           >Back to Projects</router-link
         >
       </div>

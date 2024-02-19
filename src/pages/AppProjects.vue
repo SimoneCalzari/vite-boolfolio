@@ -2,6 +2,7 @@
 import axios from "axios";
 import MainCard from "../components/MainCard.vue";
 import Loader from "../components/Loader.vue";
+import ProjectSearch from "../components/ProjectSearch.vue";
 import { store } from "../store";
 export default {
   data() {
@@ -13,6 +14,7 @@ export default {
   components: {
     MainCard,
     Loader,
+    ProjectSearch,
   },
   methods: {
     getProjects() {
@@ -21,6 +23,7 @@ export default {
         .get(`${store.baseUrl}${store.uriProjects}`, {
           params: {
             page: store.currentPage,
+            key: store.searchKey,
           },
         })
         .then((response) => {
@@ -36,7 +39,7 @@ export default {
         store.currentPage++;
         this.$router.push({
           name: "projects",
-          query: { page: store.currentPage },
+          query: { page: store.currentPage, key: store.searchKey },
         });
         this.getProjects();
       }
@@ -46,7 +49,7 @@ export default {
         store.currentPage--;
         this.$router.push({
           name: "projects",
-          query: { page: store.currentPage },
+          query: { page: store.currentPage, key: store.searchKey },
         });
         this.getProjects();
       }
@@ -54,6 +57,7 @@ export default {
   },
   created() {
     store.currentPage = this.$route.query.page ?? 1;
+    store.searchKey = this.$route.query.key ?? null;
     this.getProjects();
   },
 };
@@ -71,6 +75,7 @@ export default {
         </h2>
         <button class="btn btn-primary" @click="nextPage">Next Page</button>
       </div>
+      <ProjectSearch @search="getProjects" />
       <Loader v-if="loading" />
       <div class="row g-3 justify-content-center" v-else>
         <div class="col-4 d-flex" v-for="project in store.projects">

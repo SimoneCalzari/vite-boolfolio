@@ -55,7 +55,7 @@ export default {
         :to="{
           name: 'project',
           params: { slug: project.slug },
-          query: { page: store.currentPage },
+          query: { page: store.currentPage, key: store.searchKey },
         }"
         >Details</router-link
       >
