@@ -12,11 +12,12 @@ export default {
     getProject() {
       axios
         .get(`${store.baseUrl}${store.uriProjects}${this.$route.params.slug}`)
-        .catch((error) => {
-          // this.$router.push({ name: "NotFound" });
-        })
         .then((response) => {
-          this.project = response.data.data;
+          if (!response.data.status) {
+            this.$router.push({ path: "/project-not-found" });
+          } else {
+            this.project = response.data.data;
+          }
         });
     },
   },
@@ -36,16 +37,25 @@ export default {
         :alt="project.slug"
         v-if="project.project_img"
       />
-      <h5>Slug</h5>
-      <p>{{ project.slug }}</p>
-      <h5>Description</h5>
-      <p>{{ project.description }}</p>
-      <h5>Difficulty</h5>
-      <p>{{ project.type.difficulty }}</p>
-      <h5>Technologies</h5>
-      <span v-for="technology in project.technologies" class="me-2"
-        >{{ technology.name }}
-      </span>
+      <div v-if="project.slug">
+        <h5>Slug</h5>
+        <p>{{ project.slug }}</p>
+      </div>
+      <div v-if="project.description">
+        <h5>Description</h5>
+        <p>{{ project.description }}</p>
+      </div>
+      <div v-if="project.type?.length > 0">
+        <h5>Difficulty</h5>
+        <p>{{ project.type.difficulty }}</p>
+      </div>
+      <div v-if="project.technologies?.length > 0">
+        <h5>Technologies</h5>
+        <span v-for="technology in project.technologies" class="me-2"
+          >{{ technology.name }}
+        </span>
+      </div>
+
       <div class="mt-3">
         <router-link
           class="btn btn-primary"

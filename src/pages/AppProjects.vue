@@ -83,12 +83,14 @@ export default {
         <button class="btn btn-primary" @click="nextPage">Next Page</button>
       </div>
       <ProjectSearch @search="getProjects" :errors="errors" />
+      <!-- ERRORI DA LARAVEL -->
       <div class="alert alert-danger" v-for="error in errors">
         {{ error }}
       </div>
+      <!-- /ERRORI DA LARAVEL -->
       <div
         class="alert alert-warning"
-        v-if="!store.projects.length && !errors.length"
+        v-if="!store.projects.length && !errors.length && !loading"
       >
         La ricerca non ha prodotto risultati
       </div>
