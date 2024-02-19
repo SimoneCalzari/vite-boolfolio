@@ -86,6 +86,12 @@ export default {
       <div class="alert alert-danger" v-for="error in errors">
         {{ error }}
       </div>
+      <div
+        class="alert alert-warning"
+        v-if="!store.projects.length && !errors.length"
+      >
+        La ricerca non ha prodotto risultati
+      </div>
       <Loader v-if="loading" />
       <div class="row g-3 justify-content-center" v-else>
         <div class="col-4 d-flex" v-for="project in store.projects">
