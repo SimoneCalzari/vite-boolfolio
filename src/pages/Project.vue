@@ -16,6 +16,7 @@ export default {
           if (!response.data.status) {
             this.$router.push({ path: "/project-not-found" });
           } else {
+            console.log(response.data.data);
             this.project = response.data.data;
           }
         });
@@ -24,7 +25,7 @@ export default {
   created() {
     this.getProject();
     this.$watch(
-      () => this.$router.params,
+      () => this.$route.params,
       (toParams, previousParams) => {
         this.getProjects();
       }
@@ -55,11 +56,21 @@ export default {
         <h5>Difficulty</h5>
         <p>{{ project.type.difficulty }}</p>
       </div>
-      <div v-if="project.technologies?.length > 0">
+      <div v-if="project.technologies?.length > 0" class="mb-3">
         <h5>Technologies</h5>
         <span v-for="technology in project.technologies" class="me-2"
           >{{ technology.name }}
         </span>
+      </div>
+      <h4 class="mb-2">Comments</h4>
+      <p v-if="project.comments.length < 1">No comments yet..</p>
+      <div
+        class="border border-3 border-primary rounded px-3 pt-3 mb-3"
+        v-for="comment in project.comments"
+        v-else
+      >
+        <h6>{{ comment.author }}</h6>
+        <p>{{ comment.content }}</p>
       </div>
 
       <div class="mt-3">
