@@ -66,6 +66,15 @@ export default {
     store.currentPage = this.$route.query.page ?? 1;
     store.searchKey = this.$route.query.key ?? null;
     this.getProjects();
+
+    this.$watch(
+      () => this.$router.params,
+      (toParams, previousParams) => {
+        store.currentPage = this.$route.query.page ?? 1;
+        store.searchKey = this.$route.query.key ?? null;
+        this.getProjects();
+      }
+    );
   },
 };
 </script>

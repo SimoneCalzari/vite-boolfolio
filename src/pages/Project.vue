@@ -23,6 +23,12 @@ export default {
   },
   created() {
     this.getProject();
+    this.$watch(
+      () => this.$router.params,
+      (toParams, previousParams) => {
+        this.getProjects();
+      }
+    );
   },
 };
 </script>
