@@ -6,6 +6,8 @@ export default {
     return {
       project: {},
       store,
+      comment: "",
+      author: "",
     };
   },
   methods: {
@@ -16,9 +18,24 @@ export default {
           if (!response.data.status) {
             this.$router.push({ path: "/project-not-found" });
           } else {
-            console.log(response.data.data);
             this.project = response.data.data;
           }
+        });
+    },
+    postComment() {
+      axios
+        .post(`${store.baseUrl}${store.uriPostComment}`, {
+          author: this.author,
+          content: this.comment,
+          project_id: this.project.id,
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .then((response) => {
+          this.project.comments.push(response.data.results);
+          this.comment = "";
+          this.author = "";
         });
     },
   },
@@ -63,7 +80,7 @@ export default {
         </span>
       </div>
       <h4 class="mb-2">Comments</h4>
-      <p v-if="project.comments.length < 1">No comments yet..</p>
+      <p v-if="project.comments?.length < 1">No comments yet..</p>
       <div
         class="border border-3 border-primary rounded px-3 pt-3 mb-3"
         v-for="comment in project.comments"
@@ -73,7 +90,29 @@ export default {
         <p>{{ comment.content }}</p>
       </div>
 
-      <div class="mt-3">
+      <form @submit.prevent="postComment">
+        <h3>Add a comment</h3>
+        <div class="mb-3">
+          <label for="author" class="form-label">Author</label>
+          <input
+            type="text"
+            class="form-control"
+            id="author"
+            v-model="author"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="new-comment" class="form-label">Comment</label>
+          <textarea
+            class="form-control"
+            id="new-comment"
+            rows="3"
+            v-model="comment"
+          ></textarea>
+        </div>
+        <button class="btn btn-success">Submit</button>
+      </form>
+      <div class="mt-3 text-end">
         <router-link
           class="btn btn-primary"
           :to="{
